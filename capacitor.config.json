@@ -1,0 +1,19 @@
+{
+  "appId": "com.addisbright.academy",
+  "appName": "Addis Bright",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#3d1f0a"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#3d1f0a"
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}

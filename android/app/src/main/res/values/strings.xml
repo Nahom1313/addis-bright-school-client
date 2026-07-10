@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Addis Bright</string>
+    <string name="title_activity_main">Addis Bright</string>
+    <string name="package_name">com.addisbright.academy</string>
+    <string name="custom_url_scheme">com.addisbright.academy</string>
+</resources>
