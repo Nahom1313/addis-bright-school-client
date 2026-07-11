@@ -15,8 +15,8 @@ import toast from 'react-hot-toast';
 import { format } from 'date-fns';
 import { REGISTRAR_NAV } from './nav';
 import clsx from 'clsx';
+import { toAvatarUrl as toAvatar } from '@/utils/avatar';
 
-const toAvatar = (pic) => pic ? (pic.startsWith('http') ? pic : `/uploads/profiles/${pic}`) : null;
 
 // ─── Registration Form ────────────────────────────────────────────
 const StudentForm = ({ initial, onSave, onClose, grades, sections }) => {

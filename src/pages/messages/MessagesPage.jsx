@@ -12,13 +12,10 @@ import api from '@/api/client';
 import toast from 'react-hot-toast';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import clsx from 'clsx';
+import { toAvatarUrl } from '@/utils/avatar';
 
 // ─── Helpers ──────────────────────────────────────────────────────
-const getAvatar = (user) => {
-  if (!user?.profilePicture) return null;
-  const pic = user.profilePicture;
-  return pic.startsWith('http') ? pic : `/uploads/profiles/${pic}`;
-};
+const getAvatar = (user) => toAvatarUrl(user?.profilePicture);
 
 const getInitials = (user) =>
   user ? `${user.firstName?.[0] ?? ''}${user.lastName?.[0] ?? ''}` : '?';

@@ -7,7 +7,7 @@ const toDisplayUrl = (value) => {
   if (!value) return null;
   if (value.startsWith('http')) return value;
   // Legacy local path fallback
-  return `/uploads/profiles/${value}`;
+  return `${import.meta.env.VITE_API_URL}/uploads/profiles/${value}`;
 };
 
 export default function ProfilePictureUpload({ current, onChange, size = 'lg' }) {

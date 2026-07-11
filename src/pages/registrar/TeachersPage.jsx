@@ -13,8 +13,8 @@ import { useAssignLeader } from '@/hooks/useSectionReports';
 import toast from 'react-hot-toast';
 import { REGISTRAR_NAV } from './nav';
 import clsx from 'clsx';
+import { toAvatarUrl as toAvatar } from '@/utils/avatar';
 
-const toAvatar = (pic) => pic ? (pic.startsWith('http') ? pic : `/uploads/profiles/${pic}`) : null;
 
 const SUBJECTS = ['Mathematics','English','Amharic','Science','Biology','Chemistry','Physics','History','Geography','Civics','Art','Physical Education','ICT'];
 

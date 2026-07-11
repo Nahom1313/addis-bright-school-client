@@ -11,8 +11,8 @@ import { registrationApi } from '@/api/registration';
 import api from '@/api/client';
 import toast from 'react-hot-toast';
 import { REGISTRAR_NAV } from './nav';
+import { toAvatarUrl as toAvatar } from '@/utils/avatar';
 
-const toAvatar = (pic) => pic ? (pic.startsWith('http') ? pic : `/uploads/profiles/${pic}`) : null;
 
 const ParentForm = ({ initial, onSave, onClose }) => {
   const [photo, setPhoto] = useState(null);
