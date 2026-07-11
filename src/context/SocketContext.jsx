@@ -20,7 +20,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     // FIX: Pass JWT in socket auth so the server can authenticate the connection
-    const socket = io(window.location.origin, {
+    const socket = io(import.meta.env.VITE_API_URL, {
       withCredentials: true,
       transports: ['websocket', 'polling'],
       auth: { token }, // server middleware reads this
