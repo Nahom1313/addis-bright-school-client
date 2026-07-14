@@ -26,7 +26,7 @@ const useInView = (threshold = 0.1) => {
   return [ref, inView];
 };
 
-const MagneticBtn = ({ children }) => {
+const MagneticBtn = ({ children, className = '' }) => {
   const ref = useRef(null);
   const onMove = (e) => {
     const el = ref.current; if (!el) return;
@@ -37,7 +37,7 @@ const MagneticBtn = ({ children }) => {
   };
   const onLeave = () => { if (ref.current) ref.current.style.transform = 'translate(0,0)'; };
   return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} className={className}
       style={{ display:'inline-block', transition:'transform 0.35s cubic-bezier(.25,.46,.45,.94)' }}>
       {children}
     </div>
@@ -229,7 +229,7 @@ const CSS = `
   @keyframes lp-shimmer { 0%{background-position:0%} 100%{background-position:200%} }
   .lp-hero-sub { font-size:16px; color:var(--muted); line-height:1.78; max-width:440px; margin-bottom:40px; font-weight:300; }
   .lp-hero-cta { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-  .lp-btn-lg { display:inline-flex; align-items:center; gap:8px; padding:14px 30px; border-radius:100px; font-weight:700; font-size:15px; font-family:var(--fb); cursor:pointer; text-decoration:none; transition:all 0.3s; }
+  .lp-btn-lg { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 30px; border-radius:100px; font-weight:700; font-size:15px; font-family:var(--fb); cursor:pointer; text-decoration:none; transition:all 0.3s; }
   .lp-btn-lg.primary { background:linear-gradient(135deg,var(--amber),var(--amber2)); color:#060200; border:none; box-shadow:0 0 36px rgba(232,168,56,0.22); }
   .lp-btn-lg.primary:hover { box-shadow:0 0 56px rgba(232,168,56,0.38); transform:translateY(-2px); }
   .lp-btn-lg.outline { background:transparent; color:var(--text); border:1px solid var(--border2); font-weight:500; }
@@ -239,10 +239,10 @@ const CSS = `
 
   /* Hero right */
   .lp-hero-right { position:relative; height:480px; width:100%; overflow:hidden; }
-  .lp-photo-main { position:absolute; top:0; right:0; width:78%; height:68%; border-radius:18px; overflow:hidden; border:1px solid var(--border); }
+  .lp-photo-main { position:absolute; top:0; right:0; width:78%; height:68%; border-radius:18px; overflow:hidden; border:1px solid var(--border); background:var(--surface); }
   .lp-photo-main img { width:100%; height:100%; object-fit:cover; filter:grayscale(10%) brightness(0.9); display:block; }
   .lp-photo-main::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 50%,rgba(6,6,6,0.45)); }
-  .lp-photo-sm { position:absolute; bottom:0; left:0; width:48%; height:44%; border-radius:14px; overflow:hidden; border:1px solid var(--border); }
+  .lp-photo-sm { position:absolute; bottom:0; left:0; width:48%; height:44%; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:var(--surface); }
   .lp-photo-sm img { width:100%; height:100%; object-fit:cover; filter:grayscale(10%) brightness(0.85); display:block; }
   .lp-float-card { position:absolute; background:rgba(15,15,15,0.92); backdrop-filter:blur(20px); border:1px solid var(--border); border-radius:14px; padding:12px 16px; max-width:180px; }
   .lp-fc-1 { bottom:54%; right:2%; animation:lp-float 5s ease-in-out infinite; }
@@ -274,7 +274,7 @@ const CSS = `
   /* About */
   .lp-about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
   .lp-about-img-wrap { position:relative; }
-  .lp-about-img { width:100%; aspect-ratio:4/5; border-radius:24px; overflow:hidden; border:1px solid var(--border); }
+  .lp-about-img { width:100%; aspect-ratio:4/5; border-radius:24px; overflow:hidden; border:1px solid var(--border); background:var(--surface); }
   .lp-about-img img { width:100%; height:100%; object-fit:cover; filter:grayscale(10%) brightness(0.88); display:block; }
   .lp-about-img-ov { position:absolute; inset:0; border-radius:24px; background:linear-gradient(180deg,transparent 42%,rgba(6,6,6,0.68)); }
   .lp-about-badge { position:absolute; bottom:22px; left:22px; right:22px; background:rgba(6,6,6,0.88); backdrop-filter:blur(16px); border:1px solid var(--border); border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:12px; }
@@ -320,7 +320,7 @@ const CSS = `
   @keyframes lp-strip { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
   .lp-strip-img {
     width:300px; height:200px; border-radius:18px; object-fit:cover; flex-shrink:0;
-    border:1px solid var(--border);
+    border:1px solid var(--border); background:var(--surface);
     filter:grayscale(15%) brightness(0.78);
     transition:filter 0.4s,transform 0.4s,border-color 0.4s;
     cursor:pointer;
@@ -369,7 +369,7 @@ const CSS = `
   .lp-footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:22px; border-top:1px solid var(--border); flex-wrap:wrap; gap:10px; }
   .lp-footer-copy { font-size:12.5px; color:rgba(240,236,228,0.22); }
 
-  /* Responsive */
+  /* ===================== Responsive ===================== */
   @media(max-width:1100px) {
     .lp-nav-links,.lp-nav-actions { display:none; }
     .lp-mob-toggle { display:block; }
@@ -383,22 +383,90 @@ const CSS = `
     .br-1,.br-2 { grid-row:span 1; }
     .lp-bc { min-height:200px; }
   }
+
   @media(max-width:700px) {
-    :root { --px:20px; }
+    :root { --px:18px; }
+
+    .lp-nav { height:60px; }
+    .lp-logo span { font-size:14.5px; }
+    .lp-logo-icon { width:30px; height:30px; }
+    .lp-mob-menu { gap:22px; }
+    .lp-mob-link { font-size:23px; }
+
+    .lp-hero { padding:92px 18px 60px; min-height:auto; }
+    .lp-hero-badge { padding:6px 14px; margin-bottom:20px; }
+    .lp-hero-badge span { font-size:10.5px; }
+    .lp-h1 { font-size:clamp(32px,10vw,44px); line-height:1.08; letter-spacing:-0.03em; margin-bottom:18px; }
+    .lp-hero-sub { font-size:14.5px; max-width:100%; margin-bottom:28px; line-height:1.7; }
+    .lp-hero-cta { flex-direction:column; align-items:stretch; gap:10px; }
+    .lp-btn-lg { width:100%; padding:15px 24px; font-size:14.5px; }
+    .lp-magnetic-full { display:block; width:100%; }
+    .lp-hero-trust { gap:10px 16px; margin-top:30px; }
+    .lp-trust-item { font-size:11px; }
+
     .lp-stats-grid { grid-template-columns:1fr 1fr; }
+    .lp-stat { padding:26px 12px; }
     .lp-stat:nth-child(2) { border-right:none; }
     .lp-stat:nth-child(3) { border-top:1px solid var(--border); }
     .lp-stat:nth-child(4) { border-right:none; border-top:1px solid var(--border); }
-    .lp-bento { grid-template-columns:1fr; }
-    .bc-4,.bc-8 { grid-column:span 1; }
-    .bc-8.featured { grid-column:span 1; }
-    .lp-bc { min-height:180px; }
-    .lp-strip-img { width:240px; height:160px; }
-    .lp-testi-grid { grid-template-columns:1fr; }
-    .lp-timeline-row { grid-template-columns:1fr; gap:32px; }
+    .lp-stat-num { font-size:28px; }
+    .lp-stat-label { font-size:10.5px; }
+
+    .lp-section { padding:64px 18px; }
+    .lp-eyebrow { font-size:10px; margin-bottom:10px; }
+    .lp-h2 { font-size:clamp(25px,8vw,34px); }
+    .lp-sub { font-size:13.5px; margin-top:10px; }
+
+    .lp-about-img { aspect-ratio:1/1; }
+    .lp-about-badge { left:12px; right:12px; bottom:12px; padding:11px 13px; gap:10px; }
+    .lp-about-badge-icon { width:32px; height:32px; }
+    .lp-values { grid-template-columns:1fr 1fr; gap:10px; margin-top:24px; }
+    .lp-val-card { padding:13px; border-radius:14px; }
+    .lp-val-icon { width:30px; height:30px; margin-bottom:8px; }
+    .lp-val-title { font-size:12px; }
+    .lp-val-text { font-size:11px; }
+
+    .lp-bento { grid-template-columns:1fr; gap:12px; margin-top:36px; }
+    .bc-4,.bc-8,.bc-8.featured { grid-column:span 1; }
+    .lp-bc { min-height:0; padding:22px; border-radius:20px; }
+    .lp-bc-icon { width:40px; height:40px; margin-bottom:12px; border-radius:11px; }
+    .lp-bc-title { font-size:15.5px; }
+    .lp-bc.br-2 .lp-bc-title { font-size:17px; }
+    .lp-bc-desc { font-size:12.5px; }
+    .lp-bc.br-2 .lp-bc-desc { font-size:13px; }
+
+    .lp-strip-wrap { padding-bottom:56px; }
+    .lp-strip-img { width:210px; height:145px; border-radius:14px; }
+    .lp-strip-track { padding-top:32px; gap:10px; animation-duration:16s; }
+
+    .lp-timeline-row { grid-template-columns:1fr; gap:32px; margin-top:44px; }
     .lp-timeline-row::before { display:none; }
-    .lp-footer-top { grid-template-columns:1fr; gap:28px; }
+    .lp-ts { padding:0 6px; }
+    .lp-ts-num { width:52px; height:52px; font-size:17px; margin-bottom:14px; }
+    .lp-ts-title { font-size:17px; }
+    .lp-ts-text { font-size:13px; }
+
+    .lp-testi-grid { grid-template-columns:1fr; gap:12px; margin-top:36px; }
+    .lp-tc { padding:20px; border-radius:18px; }
+    .lp-tc-quote { font-size:13.5px; margin-bottom:18px; }
+
+    .lp-cta { padding:80px 18px; }
+    .lp-cta-h { font-size:clamp(26px,9vw,38px); }
+    .lp-cta-sub { font-size:14px; margin-bottom:32px; }
+    .lp-cta-actions { flex-direction:column; align-items:stretch; width:100%; gap:10px; }
+
+    .lp-footer { padding:44px 18px 20px; }
+    .lp-footer-top { grid-template-columns:1fr; gap:28px; margin-bottom:32px; }
+    .lp-footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; }
+  }
+
+  @media(max-width:420px) {
     .lp-values { grid-template-columns:1fr; }
+    .lp-stats-grid { grid-template-columns:1fr; }
+    .lp-stat { border-right:none !important; border-top:1px solid var(--border); }
+    .lp-stat:first-child { border-top:none; }
+    .lp-h1 { font-size:clamp(28px,11vw,36px); }
+    .lp-hero-trust { gap:8px 14px; }
   }
 `;
 
@@ -463,7 +531,7 @@ const HeroSection = () => (
         <h1 className="lp-h1">Education<br/><em>Reimagined</em><br/>for Ethiopia</h1>
         <p className="lp-hero-sub">A modern school management platform connecting directors, teachers, parents and students — powered by AI, real-time data, and Amharic support.</p>
         <div className="lp-hero-cta">
-          <MagneticBtn><Link to="/register" className="lp-btn-lg primary">Get started free <ChevronRight size={16}/></Link></MagneticBtn>
+          <MagneticBtn className="lp-magnetic-full"><Link to="/register" className="lp-btn-lg primary">Get started free <ChevronRight size={16}/></Link></MagneticBtn>
           <Link to="/login" className="lp-btn-lg outline">Sign in <ArrowUpRight size={15}/></Link>
         </div>
         <div className="lp-hero-trust">
@@ -638,7 +706,7 @@ const CTASection = () => (
         <h2 className="lp-cta-h">Ready to transform<br/><em style={{ fontStyle:'normal', color:'var(--amber)' }}>your school?</em></h2>
         <p className="lp-cta-sub">Join Addis Bright Academy's digital platform and connect your entire school community.</p>
         <div className="lp-cta-actions">
-          <MagneticBtn><Link to="/register" className="lp-btn-lg primary">Create account <ChevronRight size={16}/></Link></MagneticBtn>
+          <MagneticBtn className="lp-magnetic-full"><Link to="/register" className="lp-btn-lg primary">Create account <ChevronRight size={16}/></Link></MagneticBtn>
           <Link to="/login" className="lp-btn-lg outline">Sign in</Link>
         </div>
       </Reveal>
@@ -671,7 +739,7 @@ const Footer = () => (
       </div>
       <div className="lp-footer-bottom">
         <p className="lp-footer-copy">© {new Date().getFullYear()} Addis Bright Academy. All rights reserved.</p>
-        <p className="lp-footer-copy">Made with ❤️ for Ethiopian education</p>
+        <p className="lp-footer-copy">Made with ❤️ by NAHOM</p>
       </div>
     </div>
   </footer>
