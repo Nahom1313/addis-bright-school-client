@@ -157,7 +157,7 @@ export default function ClassLeaderPage() {
       {/* Leaderboard tab */}
       {tab === 'leaderboard' && (
         <div className="card !p-0 overflow-hidden">
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm">
             <thead>
               <tr className="bg-stone-50 border-b border-stone-100">
                 <th className="text-left px-5 py-3 section-label">Rank</th>
@@ -192,7 +192,7 @@ export default function ClassLeaderPage() {
                 </motion.tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         </div>
       )}
 
@@ -226,7 +226,7 @@ export default function ClassLeaderPage() {
                     {s.marks.length === 0 ? (
                       <p className="text-sm text-stone-400 py-2">No marks recorded yet.</p>
                     ) : (
-                      <table className="w-full text-xs mt-2">
+                      <div className="overflow-x-auto"><table className="w-full text-xs mt-2">
                         <thead>
                           <tr className="text-stone-400 font-semibold">
                             <th className="text-left py-1.5">Subject</th>
@@ -247,7 +247,7 @@ export default function ClassLeaderPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </table></div>
                     )}
                   </div>
                 )}

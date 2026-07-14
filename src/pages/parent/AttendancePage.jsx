@@ -36,7 +36,7 @@ const StudentAttendance = ({ studentId }) => {
   return (
     <>
       {stats.total > 0 && (
-        <div className="grid grid-cols-4 gap-2 mt-3 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3 mb-4">
           {['present','absent','late','excused'].map(k => {
             const s = STATUS[k];
             return (

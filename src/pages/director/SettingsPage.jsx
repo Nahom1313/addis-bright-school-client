@@ -238,7 +238,7 @@ const UserManagementPanel = () => {
         </div>
 
         {/* Role tabs */}
-        <div className="flex gap-1 p-1 bg-stone-100 rounded-xl w-fit mb-4">
+        <div className="flex gap-1 p-1 bg-stone-100 rounded-xl w-fit max-w-full overflow-x-auto mb-4">
           {ROLE_TABS.map(t => (
             <button key={t.key} onClick={() => { setTab(t.key); setSearch(''); }}
               className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
@@ -278,7 +278,7 @@ const UserManagementPanel = () => {
         ) : filtered.length === 0 ? (
           <div className="py-12 text-center text-stone-400 text-sm">No users found.</div>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto"><table className="w-full text-sm">
             <thead>
               <tr className="border-b border-stone-100 bg-stone-50/60">
                 <th className="text-left px-5 py-3 section-label">User</th>
@@ -298,7 +298,7 @@ const UserManagementPanel = () => {
                 />
               ))}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
 

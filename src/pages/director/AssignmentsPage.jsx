@@ -74,7 +74,7 @@ const AssignmentsPage = () => {
               action={<button className="btn-primary" onClick={() => setModal(true)}>Assign teacher</button>}
             />
           ) : (
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto"><table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-stone-100">
                   <th className="text-left px-5 py-3 section-label">Teacher</th>
@@ -89,7 +89,7 @@ const AssignmentsPage = () => {
                   <AssignmentRow key={a._id} a={a} onRemove={id => remove.mutate(id)} />
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

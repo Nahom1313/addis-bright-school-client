@@ -41,7 +41,7 @@ const TeacherDashboard = () => {
             ) : assignments.length === 0 ? (
               <div className="py-12 text-center text-stone-400 text-sm">No assignments yet</div>
             ) : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto"><table className="w-full text-sm">
                 <thead><tr className="border-b border-stone-100">
                   <th className="text-left px-5 py-3 section-label">Subject</th>
                   <th className="text-left px-5 py-3 section-label">Section</th>
@@ -56,7 +56,7 @@ const TeacherDashboard = () => {
                     </motion.tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
             )}
           </div>
         </div>

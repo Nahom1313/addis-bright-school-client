@@ -180,7 +180,7 @@ const UsersPage = () => {
       />
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-stone-100 rounded-xl w-fit mb-5">
+      <div className="flex gap-1 p-1 bg-stone-100 rounded-xl w-fit max-w-full overflow-x-auto mb-5">
         {ROLE_TABS.map(t => (
           <button key={t.key} onClick={() => { setTab(t.key); setSearch(''); }}
             className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${tab === t.key ? 'bg-white shadow-sm text-stone-900' : 'text-stone-500 hover:text-stone-700'}`}>
@@ -205,7 +205,7 @@ const UsersPage = () => {
           ) : filtered.length === 0 ? (
             <EmptyState icon={Users} title={`No ${tab}s found`} body="Try a different search or add a new account." />
           ) : (
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto"><table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-stone-100">
                   <th className="text-left px-5 py-3 section-label">Name</th>
@@ -222,7 +222,7 @@ const UsersPage = () => {
                   />
                 ))}
               </tbody>
-            </table>
+            </table></div>
           )}
         </div>
       </div>

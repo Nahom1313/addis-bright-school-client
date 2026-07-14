@@ -85,14 +85,14 @@ const SectionPanel = ({ sectionId, sectionName, subjects }) => {
             ) : students.length === 0 ? (
               <p className="text-center py-8 text-sm text-stone-400">No students enrolled in this section</p>
             ) : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto"><table className="w-full text-sm">
                 <thead><tr className="bg-stone-50 border-b border-stone-100">
                   <th className="text-left px-5 py-2.5 section-label">Student</th>
                   <th className="text-left px-5 py-2.5 section-label">Email</th>
                   <th className="text-right px-5 py-2.5 section-label">Progress</th>
                 </tr></thead>
                 <tbody>{students.map((s, i) => <StudentRow key={s._id} student={s} i={i} />)}</tbody>
-              </table>
+              </table></div>
             )}
           </motion.div>
         )}

@@ -76,17 +76,19 @@ const Reveal = ({ children, delay = 0, className = '', style = {} }) => {
   );
 };
 
+// Pre-baked noise texture (tiny tiled PNG data-URI) instead of a live SVG
+// feTurbulence filter — the live filter renders as heavy, glitchy static on
+// many mobile GPUs/browsers. This version is static, cheap, and consistent
+// across devices.
+const NOISE_DATA_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAAAAABWESUoAAAEK0lEQVR42gEgBN/7AKU0J1XM9Q7N14TXjuQcLhn2j8nxvCXr/ai6gNczE7plAU0TQEXkLpicFyX9uT7QXIIWGo4NsETG2PuR6iPue/w2AMq+rs01n/FRTeW2XYrDLX34uievZ++hn14P/OQSBchAARgZgttoNVnTsj1dNtjfubGP7ULYetuX54zjcRXccyhHACUg/kbNSWNB4dUvJQl8zIcy/tuY03/zdhB+/ncC0Wj3BAvu65ZDFWdefOGMzvcWSexu+rH28bj5eCkwX+fxy5s5ALtpI45hr+RNAsgJCBIXyen6yRiF03J+ccEUBNV2Xt4bAB3+L9Qih7LuTOKtLQfrCyOUDI/Pa08Oh7/Am+vln1DGA18lBgj+fed2DQRD+sPkZdExAsT5Tsal6/5d99wReJ1dABOg8sLhUinySCXhKmFQmyHtARqaijedN+LteD4UaDpSACzuIXZTC3Cz8nsJcfOJd/Lu+5L3reoc/VYgp5aWEC5xBLL6/tfrXsTfip5JXgxnRwpt67o3cgzvYuH//ADh7dIAAvjRf912UED04krlZWcdJKVO6TN04OlYE8pkSPnG+uuVASN2S3bAMaUanMYrp/hQQcDfNO7NOXL/+TA7VtCQB8sHA2r14NgBzubQoeqHuU4J5uIwrHe4SOQ47hGnvGb2kHa7BLMuRuWzmBTQPwgZHfjLV8OMqsLUiDdS8w2NuMQCYw8cA8LiEeQSvPv53yIxcPTtexyizbknGaFl+3oJOeCynoHaAR4L4vstUnLnoTx6oMjgFFoduP8/MWzZVQ60xhRZkcuyAzBlmn8lHCf08LvsCduc+WIS9yuEO69/SsZGAG+M2STGAXKLuKiwSKB3IfQGuzMpeK0nU9HZmAE9sP2suq5nbnj5AB+vVoYktrAOFUaLFq9v2ycnqcyqxN90DMKGIV+Fyy23AMvlO5BqciuAMu8UemW2R/XmAGjmzDn8SLaiEX0Dir0/BE56wQa+6MvstYFIvg+nwZ72poP0GPkVw8rv5YIzR4YNAliSIkiMyokpJ8AuGoijbYQ9B/Bt+fKcRj8LsNZ9wPMyARclM2er4gMVpat3RCv6gDoGYAeQPfo+Rw7VUT7fLhWwAETWk72xevSm4vnYGRvDDydrPeZ8C2K5Xhkh2mAT1ZEVAZTA7mEXE44pIq0x2Obo6zbbPuLoE4UE/ykaKXIVXjjBA4waBrB1lXclqBZU0rPbwGLHvWz5wxq+T3g/zrxAO99wA97RZpa4DQiDOdO8RtEDT9LwbWUHesOYLDycWnaMQ5zZADz6yOk7/Cwf59z9nIJmNZuGgRku8gCVOeTzK4AW1DfHAmHdNt++up6WDfKqzVoZi6kyPSh1CAWN7377P/1SAY0iAr89KwP1WCM1it+GK3eDJ8KLYxbXBpVHLEPXx/kaNDezY4oMFQOXf+UAAAAASUVORK5CYII=";
+
 const Noise = () => (
-  <svg aria-hidden="true" style={{
+  <div aria-hidden="true" style={{
     position:'absolute',inset:0,width:'100%',height:'100%',
-    opacity:0.03,pointerEvents:'none',zIndex:5,mixBlendMode:'overlay',
-  }}>
-    <filter id="lp-noise">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="saturate" values="0"/>
-    </filter>
-    <rect width="100%" height="100%" filter="url(#lp-noise)"/>
-  </svg>
+    opacity:0.05,pointerEvents:'none',zIndex:5,mixBlendMode:'overlay',
+    backgroundImage:`url(${NOISE_DATA_URI})`,
+    backgroundRepeat:'repeat',
+  }}/>
 );
 
 const CSS = `

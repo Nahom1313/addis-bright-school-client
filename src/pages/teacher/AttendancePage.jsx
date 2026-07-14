@@ -130,7 +130,7 @@ export default function AttendancePage() {
         <>
           {/* Summary bar */}
           {students.length > 0 && (
-            <div className="grid grid-cols-4 gap-2 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
               {STATUS_OPTIONS.map(({ value, label, color }) => (
                 <div key={value} className={clsx('card !p-3 text-center border', color)}>
                   <p className="text-lg font-bold">{summary[value] || 0}</p>
