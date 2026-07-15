@@ -173,16 +173,41 @@ const CSS = `
   }
   .lp-btn-amber:hover { opacity:0.88; transform:translateY(-1px); }
   .lp-mob-toggle { display:none; background:none; border:none; color:var(--text); cursor:pointer; padding:6px; }
+
+  .lp-mob-overlay {
+    position:fixed; inset:0; z-index:198;
+    background:rgba(0,0,0,0.6); backdrop-filter:blur(3px);
+    opacity:0; pointer-events:none; transition:opacity 0.4s ease;
+  }
+  .lp-mob-overlay.open { opacity:1; pointer-events:auto; }
+
   .lp-mob-menu {
-    display:none; position:fixed; inset:0; z-index:199;
-    background:rgba(6,6,6,0.97); backdrop-filter:blur(20px);
-    flex-direction:column; align-items:center; justify-content:center; gap:28px;
+    position:fixed; top:0; right:0; bottom:0; z-index:199;
+    width:min(78vw,320px); height:100vh;
+    background:rgba(8,8,8,0.98); backdrop-filter:blur(24px);
+    border-left:1px solid var(--border);
+    box-shadow:-24px 0 60px rgba(0,0,0,0.55);
+    display:flex; flex-direction:column;
+    padding:88px 0 32px;
+    transform:translateX(100%);
+    transition:transform 0.45s cubic-bezier(.25,.46,.45,.94);
   }
-  .lp-mob-menu.open { display:flex; }
+  .lp-mob-menu.open { transform:translateX(0); }
+  .lp-mob-links {
+    display:flex; flex-direction:column;
+    gap:2px; flex:1; padding:0 16px;
+  }
   .lp-mob-link {
-    font-family:var(--fh); font-size:26px; font-weight:700;
-    color:var(--text); background:none; border:none; cursor:pointer; text-transform:capitalize;
+    display:flex; align-items:center; width:100%;
+    font-family:var(--fb); font-size:15px; font-weight:600;
+    color:var(--text); background:none; border:none; cursor:pointer;
+    text-transform:capitalize; text-align:left; letter-spacing:-0.01em;
+    padding:14px 16px; border-radius:12px;
+    transition:background 0.2s,color 0.2s;
   }
+  .lp-mob-link:hover, .lp-mob-link:active { background:rgba(232,168,56,0.08); color:var(--amber); }
+  .lp-mob-actions { display:flex; flex-direction:column; gap:10px; margin-top:16px; padding:16px; border-top:1px solid var(--border); }
+  .lp-mob-actions .lp-btn-ghost, .lp-mob-actions .lp-btn-amber { text-align:center; }
 
   /* Hero */
   .lp-hero {
@@ -399,12 +424,13 @@ const CSS = `
     .lp-nav { backdrop-filter:none !important; background:rgba(6,6,6,0.98) !important; }
     .lp-float-card { backdrop-filter:none !important; background:rgba(15,15,15,0.98) !important; }
     .lp-about-badge { backdrop-filter:none !important; background:rgba(6,6,6,0.96) !important; }
+    .lp-mob-overlay { backdrop-filter:none !important; }
+    .lp-mob-menu { backdrop-filter:none !important; background:rgba(8,8,8,1) !important; }
 
     .lp-nav { height:60px; }
     .lp-logo span { font-size:14.5px; }
     .lp-logo-icon { width:30px; height:30px; }
-    .lp-mob-menu { gap:22px; }
-    .lp-mob-link { font-size:23px; }
+    .lp-mob-link { font-size:15px; }
 
     .lp-hero { padding:92px 18px 60px; min-height:auto; }
     .lp-hero-badge { padding:6px 14px; margin-bottom:20px; }
@@ -498,6 +524,8 @@ const TESTIMONIALS = [
   { initials:'YA', name:'Yonas Alemu',  role:'Student · Grade 10A',   bg:'rgba(232,168,56,0.12)',  tc:'#e8a838', quote:'The leaderboard pushes me to study harder. Virtual meetings with my teachers changed everything.' },
 ];
 
+const NAV_ICONS = { about:Users, features:Sparkles, 'how-it-works':CheckSquare, testimonials:Star };
+
 const Navbar = ({ scrolled, mobileOpen, setMobileOpen }) => {
   const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); setMobileOpen(false); };
   const NAV = ['about','features','how-it-works','testimonials'];
@@ -519,9 +547,20 @@ const Navbar = ({ scrolled, mobileOpen, setMobileOpen }) => {
           {mobileOpen ? <X size={22}/> : <Menu size={22}/>}
         </button>
       </nav>
+      <div className={`lp-mob-overlay${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen(false)}/>
       <div className={`lp-mob-menu${mobileOpen ? ' open' : ''}`}>
-        {NAV.map(id => <button key={id} className="lp-mob-link" onClick={() => go(id)}>{id.replace(/-/g,' ')}</button>)}
-        <div style={{ display:'flex', gap:12, marginTop:8 }}>
+        <div className="lp-mob-links">
+          {NAV.map(id => {
+            const Icon = NAV_ICONS[id];
+            return (
+              <button key={id} className="lp-mob-link" onClick={() => go(id)}>
+                <Icon size={17} style={{ marginRight:12, flexShrink:0, opacity:0.6 }}/>
+                {id.replace(/-/g,' ')}
+              </button>
+            );
+          })}
+        </div>
+        <div className="lp-mob-actions">
           <Link to="/login" className="lp-btn-ghost" onClick={() => setMobileOpen(false)}>Log in</Link>
           <Link to="/register" className="lp-btn-amber" onClick={() => setMobileOpen(false)}>Get started</Link>
         </div>
