@@ -56,7 +56,7 @@ const ReviewModal = ({ report, onClose }) => {
       </div>
 
       {/* Students snapshot preview */}
-      <div className="max-h-48 overflow-y-auto mb-4 rounded-xl border border-stone-100">
+      <div className="max-h-48 overflow-y-auto overflow-x-auto mb-4 rounded-xl border border-stone-100">
         <table className="w-full text-xs">
           <thead>
             <tr className="bg-stone-50 border-b border-stone-100">
