@@ -78,7 +78,7 @@ const AnalyticsPage = () => {
       <PageHeader title="Analytics" subtitle="School-wide statistics, attendance, and AI insights" />
 
       {/* KPI row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
         <StatCard label="Students"   value={stats?.students}  icon={Users}         color="amber"  loading={sL} delay={0.05} />
         <StatCard label="Teachers"   value={stats?.teachers}  icon={GraduationCap} color="violet" loading={sL} delay={0.10} />
         <StatCard label="Parents"    value={stats?.parents}   icon={Users}         color="green"  loading={sL} delay={0.15} />

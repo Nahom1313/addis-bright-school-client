@@ -25,7 +25,7 @@ const StudentDashboard = () => {
       {/* Student info strip */}
       {me && (
         <motion.div className="card mb-6 bg-amber-50 border-amber-100" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-sm">
             {[
               [Hash, 'Student code', me.studentCode],
               [GraduationCap, 'Section', me.sectionId

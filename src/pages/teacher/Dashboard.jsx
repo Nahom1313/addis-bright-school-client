@@ -26,12 +26,12 @@ const TeacherDashboard = () => {
         <p className="page-subtitle">Teacher portal — manage your classes and students</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8">
         <StatCard label="My Sections"  value={uniqueSections}         icon={Users}          color="sky"   loading={isLoading} delay={0.05} />
         <StatCard label="Subjects"     value={subjects.length}        icon={BookOpen}       color="amber" loading={isLoading} delay={0.10} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Assignments summary */}
         <div>
           <p className="section-label">My assignments</p>

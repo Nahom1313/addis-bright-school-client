@@ -155,7 +155,7 @@ const BulkImportPage = () => {
       {phase === 'idle' && (
         <motion.div
           initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className="border-2 border-dashed border-stone-200 rounded-2xl p-12 text-center cursor-pointer hover:border-amber-300 transition-colors"
+          className="border-2 border-dashed border-stone-200 rounded-2xl p-8 sm:p-12 text-center cursor-pointer hover:border-amber-300 transition-colors"
           onClick={() => fileRef.current?.click()}
         >
           <Upload className="w-8 h-8 text-stone-300 mx-auto mb-3" />

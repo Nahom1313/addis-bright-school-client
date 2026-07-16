@@ -292,7 +292,7 @@ export default function StudentsPage() {
         title="Students"
         subtitle={`${data?.total ?? 0} registered students`}
         action={
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2 w-full sm:w-auto">
             <button
               className="btn-secondary flex items-center gap-2 text-sm"
               onClick={() => api.post('/registration/backfill-codes').then(r => {

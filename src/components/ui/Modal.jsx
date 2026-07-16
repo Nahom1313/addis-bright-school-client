@@ -16,11 +16,11 @@ const Modal = ({ open, onClose, title, children, size = 'md' }) => {
             transition={{ type: 'spring', damping: 28, stiffness: 380 }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 flex-shrink-0">
-              <h3 className="text-lg font-semibold text-stone-900 font-display">{title}</h3>
-              <button onClick={onClose} className="btn-icon"><X className="w-4 h-4" /></button>
+            <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-stone-100 flex-shrink-0">
+              <h3 className="text-lg font-semibold text-stone-900 font-display truncate pr-2">{title}</h3>
+              <button onClick={onClose} className="btn-icon flex-shrink-0"><X className="w-4 h-4" /></button>
             </div>
-            <div className="overflow-y-auto flex-1 px-6 py-5 scrollbar-thin">{children}</div>
+            <div className="overflow-y-auto flex-1 px-4 sm:px-6 py-5 scrollbar-thin">{children}</div>
           </motion.div>
         </div>
       )}

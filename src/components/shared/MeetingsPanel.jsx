@@ -37,21 +37,25 @@ const JitsiModal = ({ meeting, user, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-stone-900">
-      <div className="flex items-center justify-between px-5 py-3 bg-stone-800 border-b border-stone-700 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between gap-2 px-3 sm:px-5 py-3 bg-stone-800 border-b border-stone-700 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live</span>
+            <span className="hidden sm:inline text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live</span>
           </div>
-          <span className="text-white font-semibold text-sm">{meeting.title}</span>
-          {audioOnly && <span className="text-xs text-amber-400">🎙️ Audio only</span>}
+          <span className="text-white font-semibold text-sm truncate min-w-0">{meeting.title}</span>
+          {audioOnly && <span className="hidden sm:inline text-xs text-amber-400 flex-shrink-0">🎙️ Audio only</span>}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
           <a href={jitsiUrl} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-stone-300 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-stone-700">
+            className="hidden sm:flex items-center gap-1.5 text-xs text-stone-300 hover:text-white transition-colors px-3 py-1.5 rounded-lg hover:bg-stone-700">
             <ExternalLink className="w-3.5 h-3.5" /> Open in new tab
           </a>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-colors">
+          <a href={jitsiUrl} target="_blank" rel="noopener noreferrer"
+            className="sm:hidden p-2 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-colors">
+            <ExternalLink className="w-4 h-4" />
+          </a>
+          <button onClick={onClose} className="flex-shrink-0 p-2 rounded-lg hover:bg-stone-700 text-stone-300 hover:text-white transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>

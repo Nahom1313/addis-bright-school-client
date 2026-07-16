@@ -68,10 +68,10 @@ const ParentDashboard = () => {
           </button>
         </div>
       )}
-      <motion.div className="flex items-start justify-between mb-6" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
-        <div>
+      <motion.div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="min-w-0">
           <p className="text-sm text-amber-600 font-semibold">Parent portal</p>
-          <h1 className="page-title font-display">{user?.firstName} {user?.lastName}</h1>
+          <h1 className="page-title font-display truncate">{user?.firstName} {user?.lastName}</h1>
           <p className="page-subtitle">
             {childCount > 0 ? `Tracking ${childCount} child${childCount > 1 ? 'ren' : ''}` : 'No children linked yet'}
           </p>
@@ -81,15 +81,15 @@ const ParentDashboard = () => {
 
       {/* Tone stats */}
       {logs.length > 0 && (
-        <motion.div className="grid grid-cols-3 gap-3 mb-6" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+        <motion.div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
           {[
             { key: 'positive', label: 'Positive',  color: 'text-emerald-700', bg: 'bg-emerald-50', icon: CheckCircle2 },
             { key: 'neutral',  label: 'Neutral',   color: 'text-stone-600',   bg: 'bg-stone-50',   icon: Info },
             { key: 'concern',  label: 'Attention', color: 'text-amber-700',   bg: 'bg-amber-50',   icon: AlertCircle },
           ].map(({ key, label, color, bg, icon: Icon }) => (
-            <div key={key} className={clsx('card !p-3 text-center', bg)}>
-              <p className={clsx('text-xl font-bold', color)}>{toneCount[key] || 0}</p>
-              <p className={clsx('text-xs opacity-70', color)}>{label}</p>
+            <div key={key} className={clsx('card !p-2.5 sm:!p-3 text-center', bg)}>
+              <p className={clsx('text-lg sm:text-xl font-bold', color)}>{toneCount[key] || 0}</p>
+              <p className={clsx('text-[11px] sm:text-xs opacity-70 truncate', color)}>{label}</p>
             </div>
           ))}
         </motion.div>

@@ -124,7 +124,7 @@ export default function ClassLeaderPage() {
       />
 
       {/* Stats row */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[
           [Users,        'Students',         students.length],
           [BookOpen,     'Avg class score',  students.length ? `${Math.round(students.filter(s => s.avgPct !== null).reduce((sum, s) => sum + s.avgPct, 0) / (students.filter(s => s.avgPct !== null).length || 1))}%` : '—'],
@@ -134,8 +134,8 @@ export default function ClassLeaderPage() {
             <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
               <Icon className="w-4 h-4 text-amber-700" />
             </div>
-            <div>
-              <p className="text-xs text-stone-400">{label}</p>
+            <div className="min-w-0">
+              <p className="text-xs text-stone-400 truncate">{label}</p>
               <p className="font-bold text-stone-800">{value}</p>
             </div>
           </div>

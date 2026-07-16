@@ -161,14 +161,14 @@ export default function AttendancePage() {
                 {students.map(student => {
                   const current = attendance[student._id] || 'present';
                   return (
-                    <div key={student._id} className="flex items-center gap-4 px-5 py-3 hover:bg-stone-50/60">
+                    <div key={student._id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-4 sm:px-5 py-3 hover:bg-stone-50/60">
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-stone-800 text-sm">
                           {student.firstName} {student.lastName}
                         </p>
                         <p className="text-xs text-stone-400">{student.studentCode}</p>
                       </div>
-                      <div className="flex gap-1.5 flex-wrap justify-end">
+                      <div className="flex gap-1.5 flex-wrap sm:justify-end">
                         {STATUS_OPTIONS.map(({ value, label, icon: Icon, color }) => (
                           <button key={value}
                             onClick={() => setAttendance(a => ({ ...a, [student._id]: value }))}

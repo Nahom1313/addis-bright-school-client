@@ -57,7 +57,7 @@ export default function RegistrarDashboard() {
 
       {/* Quick actions */}
       <p className="section-label mb-3">Quick actions</p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {QUICK_ACTIONS.map((a, i) => (
           <motion.div key={a.to} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + i * 0.05 }}>
             <Link to={a.to} className="card flex items-center gap-3 hover:shadow-md transition-shadow">

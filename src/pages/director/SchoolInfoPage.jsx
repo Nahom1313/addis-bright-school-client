@@ -80,7 +80,7 @@ const SchoolInfoPage = () => {
 
         {editing ? (
           <form onSubmit={saveInfo} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div><label className="label">School name</label><input className="input" value={form.schoolName} onChange={set('schoolName')} /></div>
               <div><label className="label">Academic year</label><input className="input" value={form.currentAcademicYear} onChange={set('currentAcademicYear')} placeholder="2024/2025" /></div>
               <div><label className="label">Phone</label><input className="input" value={form.phone} onChange={set('phone')} /></div>
@@ -93,7 +93,7 @@ const SchoolInfoPage = () => {
             </div>
           </form>
         ) : (
-          <div className="grid grid-cols-2 gap-y-4 gap-x-8 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
             {[['School name', info?.schoolName], ['Academic year', info?.currentAcademicYear], ['Phone', info?.phone], ['Email', info?.email], ['Address', info?.address], ['Tuition', info?.tuitionAmount ? `${info.tuitionAmount} ${info.currency}` : '—']].map(([l,v]) => (
               <div key={l}><p className="text-xs text-stone-400 mb-0.5">{l}</p><p className="font-medium text-stone-800">{v || '—'}</p></div>
             ))}

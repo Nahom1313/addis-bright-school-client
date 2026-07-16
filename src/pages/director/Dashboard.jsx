@@ -36,14 +36,14 @@ const DirectorDashboard = () => {
         <p className="page-subtitle">Addis Bright Academy — school overview</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8">
         <StatCard label="Students" value={stats?.students} icon={Users}         color="amber"  loading={sL} delay={0.05} />
         <StatCard label="Teachers" value={stats?.teachers} icon={GraduationCap} color="violet" loading={sL} delay={0.10} />
         <StatCard label="Parents"  value={stats?.parents}  icon={Users}         color="green"  loading={sL} delay={0.15} />
         <StatCard label="Sections" value={stats?.sections} icon={BookOpen}      color="sky"    loading={sL} delay={0.20} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2">
           <p className="section-label">Grades overview</p>
           <div className="card !p-0 overflow-hidden">

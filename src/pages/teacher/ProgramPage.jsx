@@ -67,15 +67,15 @@ export default function ProgramPage() {
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
             {[
               { label: 'Periods/week', value: periodsPerWeek },
               { label: 'Subjects',     value: uniqueSubjects },
               { label: 'Sections',     value: uniqueSections },
             ].map(({ label, value }, i) => (
-              <motion.div key={label} className="card text-center" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                <p className="text-2xl font-bold text-stone-900">{value}</p>
-                <p className="text-xs text-stone-400 mt-0.5">{label}</p>
+              <motion.div key={label} className="card !p-3 sm:!p-6 text-center" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+                <p className="text-xl sm:text-2xl font-bold text-stone-900">{value}</p>
+                <p className="text-[11px] sm:text-xs text-stone-400 mt-0.5 truncate">{label}</p>
               </motion.div>
             ))}
           </div>
