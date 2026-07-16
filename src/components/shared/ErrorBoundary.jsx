@@ -26,7 +26,7 @@ export default class ErrorBoundary extends Component {
 
   componentDidUpdate(_, prevState) {
     // If we just entered an error state because of a chunk-load failure,
-    // listen for the connection coming back and retry automatically —
+    // listen for the connection coming back and reload automatically —
     // no need to make the user click anything once they're back online.
     if (this.state.hasError && !prevState.hasError && isChunkLoadError(this.state.error)) {
       window.addEventListener('online', this.handleRetry, { once: true });
@@ -38,8 +38,15 @@ export default class ErrorBoundary extends Component {
   }
 
   handleRetry = () => {
-    // Reset boundary state so children re-render fresh, without a full
-    // page reload — much faster to recover from a transient network blip.
+    // A failed dynamic import() leaves React.lazy permanently "poisoned" —
+    // it caches the rejected promise and will immediately re-throw the
+    // same error on re-render rather than actually retrying the network
+    // fetch. Resetting boundary state alone does nothing for this case,
+    // so a real reload is required to get a fresh module graph.
+    if (isChunkLoadError(this.state.error)) {
+      window.location.reload();
+      return;
+    }
     this.setState({ hasError: false, error: null });
   };
 
