@@ -191,55 +191,61 @@ const MeetingCard = ({ meeting, canManage, onDelete, onJoin }) => {
 
   return (
     <motion.div
-      className={clsx('flex items-start gap-4 p-4 rounded-2xl border transition-all', styles.card)}
+      className={clsx('flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 p-4 rounded-2xl border transition-all', styles.card)}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: status === 'ended' ? 0.6 : 1, y: 0 }}
     >
-      {/* Date block */}
-      <div className="flex-shrink-0 text-center min-w-[3rem]">
-        <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
-          {format(start, 'MMM')}
-        </p>
-        <p className="text-2xl font-bold leading-none text-stone-800">{format(start, 'd')}</p>
-        <p className="text-[10px] text-stone-400 mt-0.5">{format(start, 'EEE')}</p>
-      </div>
+      <div className="flex items-start gap-4 min-w-0">
+        {/* Date block */}
+        <div className="flex-shrink-0 text-center min-w-[3rem]">
+          <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+            {format(start, 'MMM')}
+          </p>
+          <p className="text-2xl font-bold leading-none text-stone-800">{format(start, 'd')}</p>
+          <p className="text-[10px] text-stone-400 mt-0.5">{format(start, 'EEE')}</p>
+        </div>
 
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-semibold text-sm text-stone-900">{meeting.title}</p>
-          <span className={clsx('text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full flex items-center gap-1', styles.badge)}>
-            {status === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
-            {status}
-          </span>
-          {meeting.scope === 'section' && meeting.sectionId && (
-            <span className="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full">
-              Section {meeting.sectionId.name}
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* FIX: truncate + min-w-0 — without these, a long title with no
+                spaces won't wrap (flex items default to min-width:auto) and
+                overflows straight through the Join/delete buttons. */}
+            <p className="font-semibold text-sm text-stone-900 truncate min-w-0 max-w-full">{meeting.title}</p>
+            <span className={clsx('text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full flex items-center gap-1 flex-shrink-0', styles.badge)}>
+              {status === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+              {status}
             </span>
+            {meeting.scope === 'section' && meeting.sectionId && (
+              <span className="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full flex-shrink-0">
+                Section {meeting.sectionId.name}
+              </span>
+            )}
+          </div>
+          {meeting.description && (
+            <p className="text-xs mt-1 text-stone-500 line-clamp-2">{meeting.description}</p>
           )}
-        </div>
-        {meeting.description && (
-          <p className="text-xs mt-1 text-stone-500 line-clamp-2">{meeting.description}</p>
-        )}
-        <div className="flex items-center gap-3 mt-1.5 text-xs text-stone-400">
-          <span className="flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            {format(start, 'h:mm a')} – {format(end, 'h:mm a')}
-          </span>
-          <span className="flex items-center gap-1">
-            <Users className="w-3 h-3" />
-            {meeting.createdBy?.firstName} {meeting.createdBy?.lastName}
-          </span>
+          <div className="flex items-center gap-3 mt-1.5 text-xs text-stone-400 flex-wrap">
+            <span className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {format(start, 'h:mm a')} – {format(end, 'h:mm a')}
+            </span>
+            <span className="flex items-center gap-1">
+              <Users className="w-3 h-3" />
+              {meeting.createdBy?.firstName} {meeting.createdBy?.lastName}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2 flex-shrink-0">
+      {/* Actions — full row below content on mobile so it never has to
+          compete for space with a long title; sits inline on larger screens. */}
+      <div className="flex items-center gap-2 flex-shrink-0 self-stretch sm:self-start">
         {(status === 'live' || status === 'upcoming') && (
           <button
             onClick={() => onJoin(meeting)}
             className={clsx(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors',
+              'flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors flex-1 sm:flex-initial',
               status === 'live'
                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                 : 'bg-violet-600 hover:bg-violet-700 text-white'
@@ -252,7 +258,7 @@ const MeetingCard = ({ meeting, canManage, onDelete, onJoin }) => {
         {canManage && (
           <button
             onClick={() => onDelete(meeting._id)}
-            className="p-1.5 rounded-lg bg-stone-100 hover:bg-red-50 hover:text-red-600 text-stone-400 transition-colors"
+            className="p-1.5 rounded-lg bg-stone-100 hover:bg-red-50 hover:text-red-600 text-stone-400 transition-colors flex-shrink-0"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
