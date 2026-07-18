@@ -1,17 +1,22 @@
 // Firebase Cloud Messaging Service Worker
 // This runs in the background to receive push notifications when the app is closed
+//
+// NOTE: these values are hardcoded (not read from import.meta.env) because
+// service workers are static files served as-is — Vite's environment
+// variable substitution only applies to the actual JS bundle, not files in
+// public/. Firebase's web config values are public/non-secret by design
+// (Google's own docs confirm this), so hardcoding them here is safe.
 
 importScripts('https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging-compat.js');
 
-// Replace with your Firebase config values (these are public — safe to expose)
 firebase.initializeApp({
-  apiKey:            self.VITE_FIREBASE_API_KEY || 'YOUR_API_KEY',
-  authDomain:        self.VITE_FIREBASE_AUTH_DOMAIN || 'YOUR_PROJECT.firebaseapp.com',
-  projectId:         self.VITE_FIREBASE_PROJECT_ID || 'YOUR_PROJECT_ID',
-  storageBucket:     self.VITE_FIREBASE_STORAGE_BUCKET || 'YOUR_PROJECT.appspot.com',
-  messagingSenderId: self.VITE_FIREBASE_MESSAGING_SENDER_ID || 'YOUR_SENDER_ID',
-  appId:             self.VITE_FIREBASE_APP_ID || 'YOUR_APP_ID',
+  apiKey:            'AIzaSyBbc_XjJsqElacPzuMXPgCgY3rGT8dnKH8',
+  authDomain:        'addis-bright-school.firebaseapp.com',
+  projectId:         'addis-bright-school',
+  storageBucket:     'addis-bright-school.firebasestorage.app',
+  messagingSenderId: '845080632417',
+  appId:             '1:845080632417:web:e9164ae98d0b82ef3e9e20',
 });
 
 const messaging = firebase.messaging();
