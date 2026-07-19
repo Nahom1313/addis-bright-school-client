@@ -56,6 +56,8 @@ const TeacherAttendance   = lazy(() => import('@/pages/teacher/AttendancePage'))
 const LogsPage            = lazy(() => import('@/pages/teacher/LogsPage'));
 const TeacherEventsPage   = lazy(() => import('@/pages/teacher/EventsPage'));
 const TeacherHomeworkPage = lazy(() => import('@/pages/teacher/HomeworkPage'));
+const TeacherResourcesPage = lazy(() => import('@/pages/teacher/ResourcesPage'));
+const TeacherQuizzesPage  = lazy(() => import('@/pages/teacher/QuizzesPage'));
 const TeacherCalendarPage = lazy(() => import('@/pages/teacher/CalendarPage'));
 const ClassLeaderPage     = lazy(() => import('@/pages/teacher/ClassLeaderPage'));
 
@@ -68,6 +70,9 @@ const StudentMarksPage    = lazy(() => import('@/pages/student/MarksPage'));
 const StudentAttendance   = lazy(() => import('@/pages/student/AttendancePage'));
 const LeaderboardPage     = lazy(() => import('@/pages/student/LeaderboardPage'));
 const StudentHomeworkPage = lazy(() => import('@/pages/student/HomeworkPage'));
+const StudentLibraryPage  = lazy(() => import('@/pages/student/LibraryPage'));
+const StudentQuizzesPage  = lazy(() => import('@/pages/student/QuizzesPage'));
+const StudentQuizTakePage = lazy(() => import('@/pages/student/QuizTakePage'));
 const StudentCalendarPage = lazy(() => import('@/pages/student/CalendarPage'));
 
 // Parent
@@ -140,6 +145,8 @@ const AppRouter = () => (
         <Route path="/teacher/attendance"  element={<TeacherAttendance />} />
         <Route path="/teacher/logs"        element={<LogsPage />} />
         <Route path="/teacher/homework"      element={<TeacherHomeworkPage />} />
+        <Route path="/teacher/resources"     element={<TeacherResourcesPage />} />
+        <Route path="/teacher/quizzes"       element={<TeacherQuizzesPage />} />
         <Route path="/teacher/calendar"      element={<TeacherCalendarPage />} />
         <Route path="/teacher/class-leader"  element={<ClassLeaderPage />} />
         <Route path="/teacher/events"      element={<TeacherEventsPage />} />
@@ -168,6 +175,9 @@ const AppRouter = () => (
         <Route path="/student/attendance"  element={<StudentAttendance />} />
         <Route path="/student/leaderboard" element={<LeaderboardPage />} />
         <Route path="/student/homework"    element={<StudentHomeworkPage />} />
+        <Route path="/student/library"     element={<StudentLibraryPage />} />
+        <Route path="/student/quizzes"     element={<StudentQuizzesPage />} />
+        <Route path="/student/quizzes/:id" element={<StudentQuizTakePage />} />
         <Route path="/student/calendar"    element={<StudentCalendarPage />} />
         <Route path="/student/deadboard"  element={<DeadboardPage />} />
         <Route path="/student/events"     element={<StudentEventsPage />} />
