@@ -80,6 +80,13 @@ const NotificationsBell = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  // Lock background scroll while the sheet is open (mobile) so the page
+  // underneath doesn't scroll behind the backdrop
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
   return (
     <div className="relative" ref={ref}>
       {/* Bell button */}
@@ -99,56 +106,68 @@ const NotificationsBell = () => {
       {/* Dropdown */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.97 }}
-            transition={{ duration: 0.15 }}
-            className="fixed sm:absolute left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 right-auto sm:right-0 top-16 sm:top-10 w-[calc(100vw-2rem)] max-w-80 bg-white rounded-2xl shadow-xl border border-stone-100 z-50 overflow-hidden"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
-              <span className="font-semibold text-stone-800 text-sm">Notifications</span>
-              <div className="flex items-center gap-1">
-                {unreadCount > 0 && (
-                  <button
-                    onClick={() => markAllRead.mutate()}
-                    className="flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-medium px-2 py-1 rounded-lg hover:bg-amber-50 transition-colors"
-                  >
-                    <CheckCheck className="w-3.5 h-3.5" /> Mark all read
-                  </button>
-                )}
-                <button onClick={() => setOpen(false)} className="btn-icon text-stone-400">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+          <>
+            {/* Backdrop — mobile only, gives the sheet a clear layer above the page (matches the mobile nav drawer pattern) */}
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+              className="sm:hidden fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40"
+            />
 
-            {/* List */}
-            <div className="max-h-96 overflow-y-auto scrollbar-thin">
-              {isLoading ? (
-                <div className="space-y-3 p-4">
-                  {[1, 2, 3].map(i => <div key={i} className="h-12 bg-stone-100 rounded-xl animate-pulse" />)}
+            <motion.div
+              initial={{ opacity: 0, y: '100%' }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: '100%' }}
+              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="fixed inset-x-0 bottom-0 rounded-t-2xl
+                         sm:absolute sm:inset-x-auto sm:bottom-auto sm:right-0 sm:top-10 sm:w-80 sm:rounded-2xl
+                         bg-white shadow-xl border border-stone-100 z-50 overflow-hidden"
+              style={{ maxHeight: '80vh' }}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
+                <span className="font-semibold text-stone-800 text-sm">Notifications</span>
+                <div className="flex items-center gap-1">
+                  {unreadCount > 0 && (
+                    <button
+                      onClick={() => markAllRead.mutate()}
+                      className="flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 font-medium px-2 py-1 rounded-lg hover:bg-amber-50 transition-colors"
+                    >
+                      <CheckCheck className="w-3.5 h-3.5" /> Mark all read
+                    </button>
+                  )}
+                  <button onClick={() => setOpen(false)} className="btn-icon text-stone-400">
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-              ) : notifications.length === 0 ? (
-                <div className="py-12 text-center">
-                  <Bell className="w-8 h-8 text-stone-200 mx-auto mb-2" />
-                  <p className="text-sm text-stone-400">No notifications yet</p>
-                </div>
-              ) : (
-                <AnimatePresence mode="popLayout">
-                  {notifications.map(n => (
-                    <NotifItem
-                      key={n._id}
-                      notif={n}
-                      onRead={(id) => markRead.mutate(id)}
-                      onDelete={(id) => deleteNotif.mutate(id)}
-                    />
-                  ))}
-                </AnimatePresence>
-              )}
-            </div>
-          </motion.div>
+              </div>
+
+              {/* List */}
+              <div className="overflow-y-auto scrollbar-thin" style={{ maxHeight: 'calc(80vh - 52px)' }}>
+                {isLoading ? (
+                  <div className="space-y-3 p-4">
+                    {[1, 2, 3].map(i => <div key={i} className="h-12 bg-stone-100 rounded-xl animate-pulse" />)}
+                  </div>
+                ) : notifications.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <Bell className="w-8 h-8 text-stone-200 mx-auto mb-2" />
+                    <p className="text-sm text-stone-400">No notifications yet</p>
+                  </div>
+                ) : (
+                  <AnimatePresence mode="popLayout">
+                    {notifications.map(n => (
+                      <NotifItem
+                        key={n._id}
+                        notif={n}
+                        onRead={(id) => markRead.mutate(id)}
+                        onDelete={(id) => deleteNotif.mutate(id)}
+                      />
+                    ))}
+                  </AnimatePresence>
+                )}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
