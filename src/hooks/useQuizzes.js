@@ -41,6 +41,12 @@ export const useMyQuizzes = () =>
     queryFn:  () => quizzesApi.getMine().then(r => r.data.data.quizzes),
   });
 
+export const useGenerateQuiz = () =>
+  useMutation({
+    mutationFn: (data) => quizzesApi.generate(data),
+    onError: (e) => toast.error(e.response?.data?.message || 'AI generation failed. Try again or add questions manually.'),
+  });
+
 export const useCreateQuiz = () => {
   const qc = useQueryClient();
   return useMutation({

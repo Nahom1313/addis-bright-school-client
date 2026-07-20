@@ -8,6 +8,7 @@ export const quizzesApi = {
 
   // Teacher
   getMine:     ()         => api.get('/quizzes/mine'),
+  generate:    (data)     => api.post('/quizzes/generate', data),
   create:      (data)     => api.post('/quizzes', data),
   update:      (id, data) => api.patch(`/quizzes/${id}`, data),
   remove:      (id)       => api.delete(`/quizzes/${id}`),

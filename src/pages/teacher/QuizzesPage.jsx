@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClipboardCheck, Plus, Trash2, Pencil, Clock, BarChart3, X, Check } from 'lucide-react';
+import { ClipboardCheck, Plus, Trash2, Pencil, Clock, BarChart3, X, Check, Sparkles, Loader2 } from 'lucide-react';
 import AppShell from '@/components/shared/AppShell.jsx';
 import PageHeader from '@/components/ui/PageHeader.jsx';
 import Modal from '@/components/ui/Modal.jsx';
 import EmptyState from '@/components/ui/EmptyState.jsx';
 import { useAuth } from '@/context/AuthContext.jsx';
 import { useTeacherAssignments } from '@/hooks/useSchool.js';
-import { useMyQuizzes, useCreateQuiz, useUpdateQuiz, useDeleteQuiz, useQuizResults } from '@/hooks/useQuizzes.js';
+import { useMyQuizzes, useGenerateQuiz, useCreateQuiz, useUpdateQuiz, useDeleteQuiz, useQuizResults } from '@/hooks/useQuizzes.js';
 import { TEACHER_NAV } from './nav.js';
 import clsx from 'clsx';
 
@@ -107,6 +107,7 @@ const QuizModal = ({ open, onClose, subjects, editTarget }) => {
   const isEdit = !!editTarget;
   const create = useCreateQuiz();
   const update = useUpdateQuiz();
+  const generate = useGenerateQuiz();
 
   const [form, setForm] = useState(() => ({
     subject:          editTarget?.subject || subjects[0] || '',
@@ -116,10 +117,29 @@ const QuizModal = ({ open, onClose, subjects, editTarget }) => {
     questions:        editTarget?.questions?.length ? editTarget.questions.map(q => ({ ...q })) : [emptyQuestion()],
   }));
 
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiForm, setAiForm] = useState({ topic: '', numQuestions: 5, difficulty: 'medium', sourceText: '' });
+
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const setQuestion = (i, q) => setForm(f => ({ ...f, questions: f.questions.map((old, oi) => oi === i ? q : old) }));
   const addQuestion = () => setForm(f => ({ ...f, questions: [...f.questions, emptyQuestion()] }));
   const removeQuestion = (i) => setForm(f => ({ ...f, questions: f.questions.filter((_, oi) => oi !== i) }));
+
+  const isBlankStarter = form.questions.length === 1 && !form.questions[0].questionText.trim() && form.questions[0].options.every(o => !o.trim());
+
+  const runGenerate = () => {
+    if (!aiForm.topic.trim()) return;
+    generate.mutate(
+      { subject: form.subject, topic: aiForm.topic.trim(), numQuestions: Number(aiForm.numQuestions) || 5, difficulty: aiForm.difficulty, sourceText: aiForm.sourceText.trim() || undefined },
+      {
+        onSuccess: (res) => {
+          const generated = res.data.data.questions;
+          setForm(f => ({ ...f, questions: isBlankStarter ? generated : [...f.questions, ...generated] }));
+          setAiOpen(false);
+        },
+      }
+    );
+  };
 
   const pending = create.isPending || update.isPending;
 
@@ -175,6 +195,54 @@ const QuizModal = ({ open, onClose, subjects, editTarget }) => {
           <label className="label">Description <span className="text-stone-400 font-normal">(optional)</span></label>
           <textarea className="input resize-none" rows={2}
             value={form.description} onChange={e => set('description', e.target.value)} maxLength={1000} />
+        </div>
+
+        <div className="rounded-2xl border border-amber-200 bg-amber-50/60 overflow-hidden">
+          <button type="button" onClick={() => setAiOpen(o => !o)}
+            className="w-full flex items-center justify-between px-4 py-3 text-left">
+            <span className="flex items-center gap-2 text-sm font-semibold text-amber-800">
+              <Sparkles className="w-4 h-4" /> Generate questions with AI
+            </span>
+            <span className="text-xs text-amber-600">{aiOpen ? 'Hide' : 'Try it'}</span>
+          </button>
+          <AnimatePresence>
+            {aiOpen && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                <div className="px-4 pb-4 space-y-3">
+                  <input className="input" placeholder="Topic — e.g. Photosynthesis, Chapter 4: Fractions, WWI causes…"
+                    value={aiForm.topic} onChange={e => setAiForm(f => ({ ...f, topic: e.target.value }))} maxLength={500} />
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="label !mb-1 !text-xs">Number of questions</label>
+                      <input type="number" min={1} max={20} className="input"
+                        value={aiForm.numQuestions} onChange={e => setAiForm(f => ({ ...f, numQuestions: e.target.value }))} />
+                    </div>
+                    <div>
+                      <label className="label !mb-1 !text-xs">Difficulty</label>
+                      <select className="input" value={aiForm.difficulty} onChange={e => setAiForm(f => ({ ...f, difficulty: e.target.value }))}>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                      </select>
+                    </div>
+                  </div>
+                  <textarea className="input resize-none" rows={3}
+                    placeholder="Optional — paste notes or source text and the AI will base questions only on this content"
+                    value={aiForm.sourceText} onChange={e => setAiForm(f => ({ ...f, sourceText: e.target.value }))} maxLength={4000} />
+                  <button type="button" onClick={runGenerate} disabled={!aiForm.topic.trim() || generate.isPending}
+                    className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50">
+                    {generate.isPending
+                      ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating…</>
+                      : <><Sparkles className="w-4 h-4" /> Generate {aiForm.numQuestions || 5} questions</>
+                    }
+                  </button>
+                  <p className="text-xs text-amber-700/70">
+                    {isBlankStarter ? 'This will fill in your question list below.' : 'This will add new questions to your list below — review the correct answers before saving.'}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div>
