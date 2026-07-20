@@ -4,6 +4,7 @@ import { Activity, CheckCircle2, AlertCircle, Info, Wifi, WifiOff } from 'lucide
 import AppShell from '@/components/shared/AppShell';
 import AnnouncementBanner from '@/components/shared/AnnouncementBanner.jsx';
 import LogCard from '@/components/shared/LogCard';
+import ParentAiSummaryCard from '@/components/shared/ParentAiSummaryCard.jsx';
 import EmptyState from '@/components/ui/EmptyState';
 import ProgressChart from '@/components/shared/ProgressChart';
 import { useAuth } from '@/context/AuthContext';
@@ -78,6 +79,17 @@ const ParentDashboard = () => {
         </div>
         <ConnectionBadge connected={connected} />
       </motion.div>
+
+      {/* AI summary — one per child */}
+      {me?.studentIds?.length > 0 && (
+        <div className="space-y-3 mb-6">
+          {me.studentIds.map(child => {
+            const childId = child?._id || child;
+            const childName = child?.firstName || 'your child';
+            return <ParentAiSummaryCard key={String(childId)} studentId={String(childId)} name={childName} />;
+          })}
+        </div>
+      )}
 
       {/* Tone stats */}
       {logs.length > 0 && (

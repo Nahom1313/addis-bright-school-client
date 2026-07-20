@@ -73,6 +73,7 @@ const StudentHomeworkPage = lazy(() => import('@/pages/student/HomeworkPage'));
 const StudentLibraryPage  = lazy(() => import('@/pages/student/LibraryPage'));
 const StudentQuizzesPage  = lazy(() => import('@/pages/student/QuizzesPage'));
 const StudentQuizTakePage = lazy(() => import('@/pages/student/QuizTakePage'));
+const StudentStudyHelperPage = lazy(() => import('@/pages/student/StudyHelperPage'));
 const StudentCalendarPage = lazy(() => import('@/pages/student/CalendarPage'));
 
 // Parent
@@ -178,6 +179,7 @@ const AppRouter = () => (
         <Route path="/student/library"     element={<StudentLibraryPage />} />
         <Route path="/student/quizzes"     element={<StudentQuizzesPage />} />
         <Route path="/student/quizzes/:id" element={<StudentQuizTakePage />} />
+        <Route path="/student/study-helper" element={<StudentStudyHelperPage />} />
         <Route path="/student/calendar"    element={<StudentCalendarPage />} />
         <Route path="/student/deadboard"  element={<DeadboardPage />} />
         <Route path="/student/events"     element={<StudentEventsPage />} />
