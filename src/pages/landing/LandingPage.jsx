@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   Brain, Bell, CheckSquare, Video, Languages, Trophy,
   Users, ChevronRight, ArrowUpRight, Menu, X,
-  GraduationCap, Star, Sparkles,
+  GraduationCap, Sparkles, MessageCircle, ClipboardCheck,
+  Wand2, BookMarked, BarChart3, MapPin,
 } from 'lucide-react';
 
 import heroBg    from '@/assets/images/hero-bg.png';
@@ -313,7 +314,7 @@ const CSS = `
 
   /* Bento */
   .lp-bento { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:180px; gap:14px; margin-top:56px; }
-  .bc-4 { grid-column:span 4; } .bc-8 { grid-column:span 8; }
+  .bc-4 { grid-column:span 4; } .bc-8 { grid-column:span 8; } .bc-12 { grid-column:span 12; }
   .br-1 { grid-row:span 1; }    .br-2 { grid-row:span 2; }
   .lp-bc {
     background:var(--surface); border:1px solid var(--border); border-radius:24px;
@@ -330,6 +331,8 @@ const CSS = `
   .lp-bc.g-blue::before   { background:rgba(96,165,250,0.13); }
   .lp-bc.g-orange::before { background:rgba(251,146,60,0.13); }
   .lp-bc.g-cyan::before   { background:rgba(34,211,238,0.12); }
+  .lp-bc.g-indigo::before { background:rgba(129,140,248,0.14); }
+  .lp-bc.g-rose::before   { background:rgba(251,113,133,0.13); }
   .lp-bc-icon { width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; flex-shrink:0; }
   .lp-bc-title { font-family:var(--fh); font-size:15px; font-weight:700; letter-spacing:-0.015em; margin-bottom:8px; line-height:1.25; }
   .lp-bc.br-2 .lp-bc-title { font-size:19px; }
@@ -337,6 +340,9 @@ const CSS = `
   .lp-bc.br-2 .lp-bc-desc { font-size:13.5px; }
   .lp-bc-tag { display:inline-flex; align-items:center; gap:5px; margin-top:12px; padding:5px 12px; border-radius:100px; font-size:10.5px; font-weight:600; letter-spacing:0.03em; align-self:flex-start; }
   .lp-bc.featured { background:var(--surface2); border-color:rgba(232,168,56,0.14); }
+  .lp-bc.bc-12 { flex-direction:row; align-items:center; gap:24px; }
+  .lp-bc.bc-12 .lp-bc-icon { margin-bottom:0; }
+  .lp-bc.bc-12 .lp-bc-body { flex:1; }
 
   /* Photo strip — real sliding images */
   .lp-strip-wrap { overflow:hidden; padding:0 0 80px; background:var(--bg); border-top:1px solid var(--border); }
@@ -363,17 +369,6 @@ const CSS = `
   .lp-ts-title { font-family:var(--fh); font-size:19px; font-weight:700; margin-bottom:10px; letter-spacing:-0.01em; }
   .lp-ts-text  { font-size:13.5px; color:var(--muted); line-height:1.72; }
 
-  /* Testimonials */
-  .lp-testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:52px; }
-  .lp-tc { background:var(--surface); border:1px solid var(--border); border-radius:22px; padding:28px; transition:border-color 0.3s,transform 0.3s; }
-  .lp-tc:hover { border-color:rgba(232,168,56,0.13); transform:translateY(-3px); }
-  .lp-tc-stars { display:flex; gap:3px; margin-bottom:16px; }
-  .lp-tc-quote { font-size:14.5px; color:rgba(240,236,228,0.78); line-height:1.78; margin-bottom:22px; font-weight:300; font-style:italic; }
-  .lp-tc-author { display:flex; align-items:center; gap:12px; }
-  .lp-tc-ava { width:40px; height:40px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--fh); font-size:13px; font-weight:700; }
-  .lp-tc-name { font-family:var(--fh); font-size:13.5px; font-weight:700; }
-  .lp-tc-role { font-size:11.5px; color:var(--muted); margin-top:2px; }
-
   /* CTA */
   .lp-cta { padding:130px var(--px); text-align:center; background:var(--bg); position:relative; overflow:hidden; }
   .lp-cta-orb { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:600px; height:600px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,rgba(232,168,56,0.07) 0%,transparent 70%); }
@@ -381,17 +376,33 @@ const CSS = `
   .lp-cta-sub { font-size:16.5px; color:var(--muted); margin-bottom:44px; position:relative; z-index:1; font-weight:300; }
   .lp-cta-actions { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; position:relative; z-index:1; }
 
-  /* Footer */
-  .lp-footer { background:var(--surface); border-top:1px solid var(--border); padding:60px var(--px) 28px; }
-  .lp-footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:52px; }
-  .lp-footer-brand { font-family:var(--fh); font-size:17px; font-weight:700; display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .lp-footer-brand-icon { width:30px; height:30px; border-radius:8px; flex-shrink:0; background:linear-gradient(135deg,var(--amber),var(--amber2)); display:flex; align-items:center; justify-content:center; }
-  .lp-footer-tagline { font-size:13.5px; color:var(--muted); line-height:1.72; max-width:260px; }
-  .lp-footer-col-title { font-size:10.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(240,236,228,0.35); margin-bottom:14px; }
-  .lp-footer-links { display:flex; flex-direction:column; gap:9px; }
-  .lp-footer-link { font-size:13.5px; color:var(--muted); text-decoration:none; transition:color 0.2s; background:none; border:none; cursor:pointer; text-align:left; }
-  .lp-footer-link:hover { color:var(--text); }
-  .lp-footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:22px; border-top:1px solid var(--border); flex-wrap:wrap; gap:10px; }
+  /* Footer — redesigned: bold CTA lockup + horizontal pill links instead of
+     four flat, monotonous vertical columns of stacked text. */
+  .lp-footer { background:var(--surface); border-top:1px solid var(--border); padding:72px var(--px) 28px; position:relative; overflow:hidden; }
+  .lp-footer-orb { position:absolute; top:-40%; right:-10%; width:480px; height:480px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,rgba(232,168,56,0.06) 0%,transparent 70%); }
+  .lp-footer-top {
+    position:relative; z-index:1;
+    display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+    gap:32px; padding-bottom:44px; margin-bottom:36px; border-bottom:1px solid var(--border);
+  }
+  .lp-footer-brand-block { max-width:480px; }
+  .lp-footer-brand { font-family:var(--fh); font-size:22px; font-weight:800; display:flex; align-items:center; gap:12px; margin-bottom:14px; letter-spacing:-0.02em; }
+  .lp-footer-brand-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; background:linear-gradient(135deg,var(--amber),var(--amber2)); display:flex; align-items:center; justify-content:center; }
+  .lp-footer-tagline { font-size:15px; color:var(--muted); line-height:1.7; }
+  .lp-footer-loc { display:flex; align-items:center; gap:6px; font-size:13px; color:rgba(240,236,228,0.4); margin-top:16px; }
+  .lp-footer-cta { display:flex; flex-direction:column; align-items:flex-start; gap:12px; flex-shrink:0; }
+  .lp-footer-cta-text { font-size:13px; color:var(--muted); }
+
+  .lp-footer-links-row { position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px 10px; margin-bottom:40px; }
+  .lp-footer-pill {
+    font-size:13px; color:var(--text); text-decoration:none; background:var(--surface2);
+    border:1px solid var(--border); border-radius:100px; padding:9px 18px;
+    transition:border-color 0.2s, background 0.2s, color 0.2s; cursor:pointer;
+  }
+  .lp-footer-pill:hover { border-color:rgba(232,168,56,0.3); background:rgba(232,168,56,0.06); color:var(--amber); }
+  .lp-footer-pill.role { background:transparent; }
+
+  .lp-footer-bottom { position:relative; z-index:1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
   .lp-footer-copy { font-size:12.5px; color:rgba(240,236,228,0.22); }
 
   /* ===================== Responsive ===================== */
@@ -401,12 +412,13 @@ const CSS = `
     .lp-hero-inner { grid-template-columns:1fr; }
     .lp-hero-right { display:none; }
     .lp-about-grid { grid-template-columns:1fr; gap:48px; }
-    .lp-footer-top { grid-template-columns:1fr 1fr; gap:32px; }
     .lp-bento { grid-template-columns:1fr 1fr; grid-auto-rows:auto; }
-    .bc-4,.bc-8 { grid-column:span 1; }
+    .bc-4,.bc-8,.bc-12 { grid-column:span 1; }
     .bc-8.featured { grid-column:span 2; }
     .br-1,.br-2 { grid-row:span 1; }
     .lp-bc { min-height:200px; }
+    .lp-bc.bc-12 { grid-column:span 2; flex-direction:column; align-items:flex-start; }
+    .lp-footer-top { align-items:flex-start; }
   }
 
   @media(max-width:700px) {
@@ -466,8 +478,9 @@ const CSS = `
     .lp-val-text { font-size:11px; }
 
     .lp-bento { grid-template-columns:1fr; gap:12px; margin-top:36px; }
-    .bc-4,.bc-8,.bc-8.featured { grid-column:span 1; }
+    .bc-4,.bc-8,.bc-12,.bc-8.featured { grid-column:span 1; }
     .lp-bc { min-height:0; padding:22px; border-radius:20px; }
+    .lp-bc.bc-12 { flex-direction:column; align-items:flex-start; }
     .lp-bc-icon { width:40px; height:40px; margin-bottom:12px; border-radius:11px; }
     .lp-bc-title { font-size:15.5px; }
     .lp-bc.br-2 .lp-bc-title { font-size:17px; }
@@ -485,17 +498,16 @@ const CSS = `
     .lp-ts-title { font-size:17px; }
     .lp-ts-text { font-size:13px; }
 
-    .lp-testi-grid { grid-template-columns:1fr; gap:12px; margin-top:36px; }
-    .lp-tc { padding:20px; border-radius:18px; }
-    .lp-tc-quote { font-size:13.5px; margin-bottom:18px; }
-
     .lp-cta { padding:80px 18px; }
     .lp-cta-h { font-size:clamp(26px,9vw,38px); }
     .lp-cta-sub { font-size:14px; margin-bottom:32px; }
     .lp-cta-actions { flex-direction:column; align-items:stretch; width:100%; gap:10px; }
 
-    .lp-footer { padding:44px 18px 20px; }
-    .lp-footer-top { grid-template-columns:1fr; gap:28px; margin-bottom:32px; }
+    .lp-footer { padding:48px 18px 20px; }
+    .lp-footer-top { flex-direction:column; align-items:flex-start; gap:24px; padding-bottom:32px; margin-bottom:28px; }
+    .lp-footer-cta { width:100%; }
+    .lp-footer-cta .lp-btn-amber { width:100%; text-align:center; }
+    .lp-footer-links-row { margin-bottom:28px; }
     .lp-footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; }
   }
 
@@ -515,20 +527,19 @@ const BENTO = [
   { col:'bc-4', row:'br-1', glow:'g-purple', icon:Video, iconBg:'rgba(192,132,252,0.1)', iconColor:'#c084fc', title:'Virtual Meetings', desc:'Built-in Jitsi video rooms. No downloads, no external accounts needed.', tag:'Jitsi Meet', tagBg:'rgba(192,132,252,0.08)', tagColor:'#c084fc' },
   { col:'bc-4', row:'br-1', glow:'g-blue',   icon:Languages, iconBg:'rgba(96,165,250,0.1)', iconColor:'#60a5fa', title:'Amharic Translation', desc:'One click translates all summaries to Amharic. Built for Ethiopian families.', tag:'አማርኛ', tagBg:'rgba(96,165,250,0.08)', tagColor:'#60a5fa' },
   { col:'bc-4', row:'br-1', glow:'g-cyan',   icon:CheckSquare, iconBg:'rgba(34,211,238,0.1)', iconColor:'#22d3ee', title:'Attendance Tracking', desc:'Digital daily roll call with a full 90-day history for students and parents.', tag:'Digital', tagBg:'rgba(34,211,238,0.08)', tagColor:'#22d3ee' },
-  { col:'bc-8', row:'br-1', glow:'g-orange', featured:true, icon:Trophy, iconBg:'rgba(251,146,60,0.1)', iconColor:'#fb923c', title:'Student Leaderboard & Recognition', desc:'Section-level academic rankings to inspire healthy competition and reward consistent effort.', tag:'Motivation', tagBg:'rgba(251,146,60,0.08)', tagColor:'#fb923c' },
+  { col:'bc-8', row:'br-1', glow:'g-indigo', featured:true, icon:MessageCircle, iconBg:'rgba(129,140,248,0.1)', iconColor:'#818cf8', title:'AI Study Helper', desc:'Students ask questions and get answers grounded in their own class notes and uploaded materials — never off-topic, never doing the homework for them.', tag:'Powered by Groq', tagBg:'rgba(129,140,248,0.1)', tagColor:'#818cf8' },
+  { col:'bc-4', row:'br-1', glow:'g-rose',   icon:ClipboardCheck, iconBg:'rgba(251,113,133,0.1)', iconColor:'#fb7185', title:'Practice Quizzes', desc:'Teachers build quizzes by hand or generate a full draft with AI in seconds — graded instantly, server-side, every time.', tag:'AI-assisted', tagBg:'rgba(251,113,133,0.08)', tagColor:'#fb7185' },
+  { col:'bc-4', row:'br-1', glow:'g-amber',  icon:Wand2, iconBg:'rgba(232,168,56,0.1)', iconColor:'#e8a838', title:'AI Parent Summary', desc:"A plain-language weekly summary of your child's attendance, grades and mood — generated automatically, no digging through tabs.", tag:'Powered by Groq', tagBg:'rgba(232,168,56,0.1)', tagColor:'#e8a838' },
+  { col:'bc-4', row:'br-1', glow:'g-blue',   icon:BookMarked, iconBg:'rgba(96,165,250,0.1)', iconColor:'#60a5fa', title:'Study Library', desc:'Teachers upload notes, slides and links; students browse and download by subject — one shared place for class materials.', tag:'Shared library', tagBg:'rgba(96,165,250,0.08)', tagColor:'#60a5fa' },
+  { col:'bc-4', row:'br-1', glow:'g-teal',   icon:BarChart3, iconBg:'rgba(52,211,153,0.1)', iconColor:'#34d399', title:'AI Analytics Insights', desc:'Directors and registrars get plain-language takeaways from the numbers — which section needs attention, what\'s trending well.', tag:'Powered by Groq', tagBg:'rgba(52,211,153,0.08)', tagColor:'#34d399' },
+  { col:'bc-12', row:'br-1', glow:'g-orange', icon:Trophy, iconBg:'rgba(251,146,60,0.1)', iconColor:'#fb923c', title:'Student Leaderboard & Recognition', desc:'Section-level academic rankings to inspire healthy competition and reward consistent effort.', tag:'Motivation', tagBg:'rgba(251,146,60,0.08)', tagColor:'#fb923c' },
 ];
 
-const TESTIMONIALS = [
-  { initials:'TH', name:'Tigist Haile',  role:'Parent · Grade 7',     bg:'rgba(52,211,153,0.12)',  tc:'#34d399', quote:'For the first time I know exactly how my daughter is doing — in Amharic! The AI summaries arrive instantly.' },
-  { initials:'AB', name:'Abebe Bekele', role:'Teacher · Mathematics', bg:'rgba(192,132,252,0.12)', tc:'#c084fc', quote:'I write a 2-sentence note and the AI writes a beautiful parent message. Saves me hours every week.' },
-  { initials:'YA', name:'Yonas Alemu',  role:'Student · Grade 10A',   bg:'rgba(232,168,56,0.12)',  tc:'#e8a838', quote:'The leaderboard pushes me to study harder. Virtual meetings with my teachers changed everything.' },
-];
-
-const NAV_ICONS = { about:Users, features:Sparkles, 'how-it-works':CheckSquare, testimonials:Star };
+const NAV_ICONS = { about:Users, features:Sparkles, 'how-it-works':CheckSquare };
 
 const Navbar = ({ scrolled, mobileOpen, setMobileOpen }) => {
   const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:'smooth' }); setMobileOpen(false); };
-  const NAV = ['about','features','how-it-works','testimonials'];
+  const NAV = ['about','features','how-it-works'];
   return (
     <>
       <nav className={`lp-nav${scrolled ? ' sc' : ''}`}>
@@ -675,11 +686,13 @@ const FeaturesSection = () => (
       </Reveal>
       <div className="lp-bento">
         {BENTO.map(({col,row,glow,featured,icon:Icon,iconBg,iconColor,title,desc,tag,tagBg,tagColor},idx) => (
-          <Reveal key={title} delay={idx*0.06} className={`lp-bc ${col} ${row} ${glow}${featured?' featured':''}`}>
+          <Reveal key={title} delay={idx*0.05} className={`lp-bc ${col} ${row} ${glow}${featured?' featured':''}`}>
             <div className="lp-bc-icon" style={{background:iconBg}}><Icon size={21} color={iconColor}/></div>
-            <div className="lp-bc-title">{title}</div>
-            <div className="lp-bc-desc">{desc}</div>
-            <div className="lp-bc-tag" style={{background:tagBg,color:tagColor}}><Sparkles size={9}/> {tag}</div>
+            <div className="lp-bc-body">
+              <div className="lp-bc-title">{title}</div>
+              <div className="lp-bc-desc">{desc}</div>
+              <div className="lp-bc-tag" style={{background:tagBg,color:tagColor}}><Sparkles size={9}/> {tag}</div>
+            </div>
           </Reveal>
         ))}
       </div>
@@ -729,26 +742,6 @@ const TimelineSection = () => (
   </section>
 );
 
-const TestimonialsSection = () => (
-  <section className="lp-section" id="testimonials" style={{ background:'var(--surface)' }}>
-    <div className="lp-wrap">
-      <Reveal><p className="lp-eyebrow">Testimonials</p><h2 className="lp-h2">Voices from our <em>community</em></h2></Reveal>
-      <div className="lp-testi-grid">
-        {TESTIMONIALS.map(({initials,name,role,bg,tc,quote},i) => (
-          <Reveal key={name} delay={i*0.1} className="lp-tc">
-            <div className="lp-tc-stars">{[1,2,3,4,5].map(s => <Star key={s} size={12} color="#e8a838" fill="#e8a838"/>)}</div>
-            <p className="lp-tc-quote">"{quote}"</p>
-            <div className="lp-tc-author">
-              <div className="lp-tc-ava" style={{background:bg,color:tc}}>{initials}</div>
-              <div><div className="lp-tc-name">{name}</div><div className="lp-tc-role">{role}</div></div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
 const CTASection = () => (
   <section className="lp-cta">
     <div className="lp-cta-orb"/><Noise/>
@@ -766,36 +759,50 @@ const CTASection = () => (
   </section>
 );
 
-const Footer = () => (
-  <footer className="lp-footer">
-    <div className="lp-wrap">
-      <div className="lp-footer-top">
-        <div>
-          <div className="lp-footer-brand">
-            <div className="lp-footer-brand-icon"><GraduationCap size={15} color="#060200"/></div>
-            Addis Bright
+const Footer = () => {
+  const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
+  return (
+    <footer className="lp-footer">
+      <div className="lp-footer-orb"/>
+      <div className="lp-wrap">
+        <div className="lp-footer-top">
+          <div className="lp-footer-brand-block">
+            <div className="lp-footer-brand">
+              <div className="lp-footer-brand-icon"><GraduationCap size={18} color="#060200"/></div>
+              Addis Bright
+            </div>
+            <p className="lp-footer-tagline">Empowering Ethiopian education through technology, connection and innovation since 2009.</p>
+            <p className="lp-footer-loc"><MapPin size={13}/> Addis Ababa, Ethiopia</p>
           </div>
-          <p className="lp-footer-tagline">Empowering Ethiopian education through technology, connection and innovation since 2009.</p>
-          <p style={{ fontSize:12.5, color:'rgba(240,236,228,0.22)', marginTop:14 }}>📍 Addis Ababa, Ethiopia</p>
+          <div className="lp-footer-cta">
+            <p className="lp-footer-cta-text">Ready to bring your school online?</p>
+            <Link to="/register" className="lp-btn-amber">Get started free</Link>
+          </div>
         </div>
-        {[
-          {title:'Platform',links:['Features','How it works','About','Testimonials']},
-          {title:'Portals', links:['Director','Registrar','Teacher','Parent','Student']},
-          {title:'Support', links:['Help Center','Privacy Policy','Terms','Contact']},
-        ].map(({title,links}) => (
-          <div key={title}>
-            <p className="lp-footer-col-title">{title}</p>
-            <div className="lp-footer-links">{links.map(l => <span key={l} className="lp-footer-link">{l}</span>)}</div>
-          </div>
-        ))}
+
+        <div className="lp-footer-links-row">
+          <button className="lp-footer-pill" onClick={() => go('features')}>Features</button>
+          <button className="lp-footer-pill" onClick={() => go('how-it-works')}>How it works</button>
+          <button className="lp-footer-pill" onClick={() => go('about')}>About</button>
+          <span style={{ width:1, background:'var(--border)', margin:'0 4px' }}/>
+          {['Director','Registrar','Teacher','Parent','Student'].map(r => (
+            <span key={r} className="lp-footer-pill role">{r}</span>
+          ))}
+          <span style={{ width:1, background:'var(--border)', margin:'0 4px' }}/>
+          <span className="lp-footer-pill role">Help Center</span>
+          <span className="lp-footer-pill role">Privacy Policy</span>
+          <span className="lp-footer-pill role">Terms</span>
+          <span className="lp-footer-pill role">Contact</span>
+        </div>
+
+        <div className="lp-footer-bottom">
+          <p className="lp-footer-copy">© {new Date().getFullYear()} Addis Bright Academy. All rights reserved.</p>
+          <p className="lp-footer-copy">Made with ❤️ by NAHOM</p>
+        </div>
       </div>
-      <div className="lp-footer-bottom">
-        <p className="lp-footer-copy">© {new Date().getFullYear()} Addis Bright Academy. All rights reserved.</p>
-        <p className="lp-footer-copy">Made with ❤️ by NAHOM</p>
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 export default function LandingPage() {
   const [scrolled,   setScrolled]   = useState(false);
@@ -822,7 +829,6 @@ export default function LandingPage() {
       <FeaturesSection/>
       <PhotoStrip/>
       <TimelineSection/>
-      <TestimonialsSection/>
       <CTASection/>
       <Footer/>
     </div>

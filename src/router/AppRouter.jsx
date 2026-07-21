@@ -22,6 +22,7 @@ const GradesPage          = lazy(() => import('@/pages/director/GradesPage'));
 const AssignmentsPage     = lazy(() => import('@/pages/director/AssignmentsPage'));
 const DirectorEventsPage  = lazy(() => import('@/pages/director/EventsPage'));
 const AnalyticsPage       = lazy(() => import('@/pages/director/AnalyticsPage'));
+const RegistrarAnalyticsPage = lazy(() => import('@/pages/registrar/AnalyticsPage'));
 const SchoolInfoPage      = lazy(() => import('@/pages/director/SchoolInfoPage'));
 const BulkImportPage      = lazy(() => import('@/pages/director/BulkImportPage'));
 const SettingsPage         = lazy(() => import('@/pages/director/SettingsPage'));
@@ -133,6 +134,7 @@ const AppRouter = () => (
         <Route path="/registrar/payments"        element={<RegPaymentsPage />} />
         <Route path="/registrar/calendar"        element={<RegCalendarPage />} />
         <Route path="/registrar/section-reports" element={<SectionReportsPage />} />
+        <Route path="/registrar/analytics"       element={<RegistrarAnalyticsPage />} />
       </Route>
 
       {/* Teacher */}

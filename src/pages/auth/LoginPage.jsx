@@ -1,19 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Eye, EyeOff, Loader2, ArrowRight, FlaskConical } from 'lucide-react';
+import { GraduationCap, Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLogin } from '@/hooks/useAuth';
-import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { AUTH_CSS } from './_authStyles';
-
-// ─── Test accounts — update emails/passwords to match your DB ─────
-const TEST_ACCOUNTS = [
-  { role: 'Director',   email: 'director@addisbright.com',  password: 'Director1',  color: '#7c3aed' },
-  { role: 'Registrar',  email: 'registrar@addisbright.com', password: 'Registrar1', color: '#2563eb' },
-  { role: 'Teacher',    email: 'teacher@addisbright.com',   password: 'Teacher1',   color: '#0891b2' },
-  { role: 'Student',    email: 'student@addisbright.com',   password: 'Student1',   color: '#16a34a' },
-  { role: 'Parent',     email: 'parent@addisbright.com',    password: 'Parent1',    color: '#d97706' },
-];
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -21,7 +11,6 @@ export default function LoginPage() {
   const [form, setForm]         = useState({ email: '', password: '' });
   const [showPw, setShowPw]     = useState(false);
   const [error, setError]       = useState('');
-  const [loadingRole, setLoadingRole] = useState(null);
 
   const set = field => e => { setError(''); setForm(f => ({ ...f, [field]: e.target.value })); };
 
@@ -33,26 +22,12 @@ export default function LoginPage() {
     });
   };
 
-  const loginAs = (account) => {
-    setError('');
-    setLoadingRole(account.role);
-    login({ email: account.email, password: account.password }, {
-      onError: err => {
-        setLoadingRole(null);
-        setError(`${account.role}: ${err.response?.data?.message || 'Login failed'}`);
-      },
-      onSettled: () => setLoadingRole(null),
-    });
-  };
-
   return (
     <div className="auth-page">
       <style>{AUTH_CSS}</style>
       <div className="auth-grid"/>
 
       <div style={{ width:'100%', maxWidth:'420px', display:'flex', flexDirection:'column', alignItems:'center' }}>
-        <div className="auth-lang"><LanguageSwitcher /></div>
-
         <div className="auth-card">
           {/* Logo */}
           <div className="auth-logo">
@@ -109,48 +84,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* ─── Test login shortcuts ─────────────────────────────── */}
-          <div style={{ marginTop:'24px', borderTop:'1px solid #e7e5e4', paddingTop:'20px' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'6px', marginBottom:'12px' }}>
-              <FlaskConical size={13} color="#a8a29e" />
-              <span style={{ fontSize:'11px', fontWeight:600, color:'#a8a29e', textTransform:'uppercase', letterSpacing:'0.05em' }}>
-                Quick test login
-              </span>
-            </div>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:'8px' }}>
-              {TEST_ACCOUNTS.map(account => (
-                <button
-                  key={account.role}
-                  onClick={() => loginAs(account)}
-                  disabled={!!loadingRole}
-                  style={{
-                    padding:'6px 14px',
-                    borderRadius:'10px',
-                    border:`1.5px solid ${account.color}22`,
-                    backgroundColor:`${account.color}10`,
-                    color: account.color,
-                    fontSize:'12px',
-                    fontWeight:600,
-                    cursor:'pointer',
-                    opacity: loadingRole && loadingRole !== account.role ? 0.4 : 1,
-                    display:'flex',
-                    alignItems:'center',
-                    gap:'5px',
-                    transition:'all 0.15s',
-                  }}>
-                  {loadingRole === account.role
-                    ? <Loader2 size={11} className="auth-spin" />
-                    : null
-                  }
-                  {account.role}
-                </button>
-              ))}
-            </div>
-            <p style={{ fontSize:'10px', color:'#d4cfc9', marginTop:'10px' }}>
-              Update emails in <code style={{ fontSize:'10px' }}>LoginPage.jsx</code> to match your test accounts
-            </p>
-          </div>
-
           <p className="auth-footer">
             {t('auth.no_account')}{' '}
             <Link to="/register">{t('auth.create_account')}</Link>
@@ -160,4 +93,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
