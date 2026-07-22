@@ -5,7 +5,6 @@ import { GraduationCap, LogOut, Menu, X } from 'lucide-react';
 import { useLogout } from '@/hooks/useAuth';
 import { useAuth } from '@/context/AuthContext';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import LanguageToggle from '@/components/ui/LanguageToggle';
 import NotificationsBell from '@/components/shared/NotificationsBell';
 import clsx from 'clsx';
@@ -71,14 +70,10 @@ const Sidebar = ({ navItems, onClose }) => {
         ))}
       </nav>
 
-      {/* Language section */}
+      {/* Language section — log translation toggle only (translates status
+          log content to Amharic on demand). The UI language switcher was
+          removed platform-wide. */}
       <div className="px-3 py-3 border-t border-stone-100 space-y-1">
-        <p className="section-label px-3 mb-2">Language / ቋንቋ</p>
-        {/* i18n UI language switcher */}
-        <div className="px-3 mb-1">
-          <LanguageSwitcher compact />
-        </div>
-        {/* Log translation toggle — switches log content to Amharic */}
         <LanguageToggle />
       </div>
 
@@ -134,7 +129,6 @@ const AppShell = ({ navItems, children }) => {
           <button onClick={() => setOpen(true)} className="btn-icon"><Menu className="w-5 h-5" /></button>
           <span className="text-sm font-semibold font-display text-stone-800 flex-1">Addis Bright</span>
           <NotificationsBell />
-          <LanguageSwitcher compact />
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6 scrollbar-thin">{children}</main>
       </div>

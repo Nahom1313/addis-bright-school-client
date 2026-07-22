@@ -477,8 +477,9 @@ const CSS = `
     .lp-val-title { font-size:12px; }
     .lp-val-text { font-size:11px; }
 
-    .lp-bento { grid-template-columns:1fr; gap:12px; margin-top:36px; }
-    .bc-4,.bc-8,.bc-12,.bc-8.featured { grid-column:span 1; }
+    .lp-bento { grid-template-columns:1fr !important; grid-auto-rows:auto !important; gap:12px; margin-top:36px; }
+    .bc-4,.bc-8,.bc-12,.bc-8.featured { grid-column:span 1 !important; }
+    .br-1,.br-2 { grid-row:span 1 !important; }
     .lp-bc { min-height:0; padding:22px; border-radius:20px; }
     .lp-bc.bc-12 { flex-direction:column; align-items:flex-start; }
     .lp-bc-icon { width:40px; height:40px; margin-bottom:12px; border-radius:11px; }
